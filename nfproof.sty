@@ -24,8 +24,8 @@
 % eclbkbox.sty by Hideki Isozaki, 1992
 % Date: May  28, 1993
 
-\ProvidesFile{deloproof.sty}
-\ProvidesPackage{deloproof}
+\ProvidesFile{nfproof.sty}
+\ProvidesPackage{nfproof}
 
 \RequirePackage{amsfonts}
 \RequirePackage{amsmath}
@@ -270,15 +270,15 @@
   \bkvz@bottom
 }
 
-\newcounter{deloproofcounter}[section]
-\renewcommand\thedeloproofcounter{\arabic{section}.\arabic{deloproofcounter}}
+\newcounter{nfproofcounter}[section]
+\renewcommand\thenfproofcounter{\arabic{section}.\arabic{nfproofcounter}}
 
-\newenvironment{deloproof}[1][\proofname]{
+\newenvironment{nfproof}[1][\proofname]{
   \begin{breakbox}
     \par\pushQED{\qed}
     \normalfont\topsep6\p@\@plus6\p@\relax\trivlist
     \item{\bf{#1\@addpunct{.} }}\ignorespaces
   }{
-    \qedhere\setcounter{deloproofcounter}{0}\popQED\endtrivlist\@endpefalse
+    \qedhere\setcounter{nfproofcounter}{0}\popQED\endtrivlist\@endpefalse
   \end{breakbox}
 }
