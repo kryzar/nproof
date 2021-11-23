@@ -16,9 +16,6 @@
 \ProvidesFile{nfproof.sty}
 \ProvidesPackage{nfproof}
 
-\RequirePackage{amsfonts}
-\RequirePackage{amsmath}
-\RequirePackage{amssymb}
 \RequirePackage{amsthm}
 
 \newbox\bk@bxb
@@ -27,11 +24,12 @@
 \newif\ifbkcount
 \newcount\bk@lcnt
 
-\def\breakboxskip{2cmjh}
-\def\breakboxparindent{1.8em}
+%%%%%%%%%%%%%%%%%%%
+% User parameters %
+%%%%%%%%%%%%%%%%%%%
 
-%% Paramètres modifiables
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% User parameters are set in this section, and nowhere else.
+
 \def\bkvz@before@breakbox{\ifhmode\par\fi\vskip\breakboxskip\relax}
 % Ce que l'on met à gauche du texte, par exemple, une ligne verticale
 % pour faire un cadre, ou une ligne qui ondule.
@@ -55,11 +53,12 @@
 \def\breakboxparindent{1.8em}
 \def\breakboxskip{\topsep}
 
-%% FIN DES PARAMÈTRES MODIFIABLES
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% End of the user parameters.
 
-%% Le début de l'environement
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%
+% Actual code %
+%%%%%%%%%%%%%%%
+
 \def\breakbox{%
     % On n'est pas nécessairement en mode vertical.
     % C'est \bkvz@before@breakbox qui s'en occupe (ou non).
@@ -259,15 +258,12 @@
   \bkvz@bottom
 }
 
-\newcounter{nfproofcounter}[section]
-\renewcommand\thenfproofcounter{\arabic{section}.\arabic{nfproofcounter}}
-
 \newenvironment{nfproof}[1][\proofname]{
   \begin{breakbox}
     \par\pushQED{\qed}
     \normalfont\topsep6\p@\@plus6\p@\relax\trivlist
     \item{\bf{#1\@addpunct{.} }}\ignorespaces
-  }{
-    \qedhere\setcounter{nfproofcounter}{0}\popQED\endtrivlist\@endpefalse
+}{
+    \qedhere\popQED\endtrivlist\@endpefalse
   \end{breakbox}
 }
