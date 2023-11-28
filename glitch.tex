@@ -1,0 +1,772 @@
+\documentclass[a4paper, 12pt]{article}
+\usepackage{LoLaTeXpackage}
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{drinmodmacros}
+\usepackage{quiver}
+\usepackage{nfproof}
+
+\newcommand{\Fqchi}{\Fq[X, Y]\big/\langle\chi\rangle}
+\newcommand{\Fchi}[1]{F_{{#1}}^{(\chi)}}
+\DeclareMathOperator{\FracId}{FracId}
+\renewcommand{\Pr}{\mathrm{Pr}}
+\DeclareMathOperator{\Isom}{Isom}
+
+\title{Yeah it's a group action}
+
+\begin{document}
+\maketitle
+
+In all this document, fix $\Fq$ a finite field, $A = \Fq[X]$, $K/\Fq$ a finite
+field extension and $\omega \in K$. For every integer $r<1$, let $\Drin{r}(A,
+K)$ be the set of rank-$r$ Drinfeld modules $A\to\Ktau$ with constant
+coefficient $\omega$. Further fix $\chi \in \Fq[S, T]$ a polynomial that is the
+characteristic polynomial of some Drinfeld module $\phi\in\Drin2$ and $R$ the
+quotient \[R := \Fqchi,\] equiped with the canonical projection $\pi: \Fq[X,
+Y]\to R$.
+
+\begin{definition}
+	Denote $\Cchi$ to be set of $\Kbar$-isomorphism classes whose
+	representatives are all $K$-isogeneous.
+\end{definition}
+
+Our goal is to derive a group action \[\Cl\left(\Fq[X,
+Y]\big/\langle\chi\rangle\right) \times \Cchi \to \Cchi.\]
+
+\section{Yeah, it really is a group action}
+
+We already\footnote{See note \texttt{drinmod-torsion-subspace}.} proved the
+following result:
+
+\begin{proposition}\label{prop-drinmod-subspace}
+	For every Drinfeld module $\phi\in\Drin2$, there exists a Drinfeld module
+	$\psi\in\Drin2$and an isogeny $P\in \Kbartau$ from $\phi$ to $\psi$ whose
+	kernel is $V$.
+
+    Explicitely, those may be given as \[P = \prod_{v\in V}(X + v) =: \sum_i
+    P_i\tau^i\] and $\psi = \sum_{i=0}^r \psi_i \tau^i$ with $\psi_0 = \phi_0$
+    and \[\psi_{n+1} = \frac{\sum_{i+j = n+1} P_i \phi_j^{q^i} - \sum_{i+j=n+1
+    \atop (i, j) \neq (n+1, 0)} \psi_i P_j^{q^i}}{P_0^{q^{n+1}}}, \quad \forall
+    n < r.\]
+\end{proposition}
+
+With the notations of \ref{prop-drinmod-subspace}, will denote by $V\cdot\phi$
+the Drinfeld module $\psi$, and by $u_{V,\phi}$ the unique unitary isogeny
+$\phi\to V\cdot\phi$ given by the proposition.
+
+\paragraph{Isogenies and isomorphisms} Let us begin with a very useful
+proposition.
+
+\begin{proposition}\label{prop-isoiso}
+	Let two rank-two Drinfeld modules $A\to\Ktau$ that are ordinary are
+	$K$-isomorphic \iif they are $\Kbar$-isomorphic and $K$-isogeneous.
+\end{proposition}
+
+\begin{nfproof}
+	Let $\phi, \psi: A\to\Ktau$ be two Drinfeld modules as in the proposition.
+	Of course, if $\phi$ and $\psi$ are $K$-isomorphic, they are
+	$\Kbar$-isomorphic and $K$-isogeneous.
+
+	Assume now that $\phi$ and $\psi$ are $\Kbar$-isomorphic and
+	$K$-isogeneous. Since those two have rank two and are isomorphic, they have
+	height $1$ from \cite[Th. 13.1]{Ros02}. From \cite[Prop.
+	4.5.3]{kuhn-mcdoter}, this implies that
+
+	\[\begin{cases}
+		\End_K(\phi) = \End_\Kbar(\phi), \\
+		\End_K(\psi) = \End_\Kbar(\psi).
+	\end{cases}\]
+
+	Now let $\lambda\in \Kbar: \phi\to\psi$ be an isomorphism and $u\in \Ktau:
+	\phi\to\psi$ be an isogeny. Then $u\lambda^{-1}$ is a
+	$\Kbar$-endomorphism of $\psi$; hence, $u\lambda^{-1}$ lives in $\Ktau$.
+	And since $u$ lives in $\Ktau$, $\lambda$ must be in $K$.
+\end{nfproof}
+
+\begin{definition}
+	For every Drinfeld module $\phi: A\to \Ktau$, denote $\chi(\phi)$ to be its
+	characteristic polynomial. If furthermore $\phi$ has rank two, denote
+	$\j(\phi)$ to be its $j$-invariant.
+\end{definition}
+
+We remind ourselves the structural roles of these quantities.
+
+\begin{proposition}
+	Let $\phi,\psi : A\to\Ktau$ be two rank-two Drinfeld modules. Then:
+	\begin{itemize}
+		\item $\phi$ and $\psi$ are $\Kbar$-isomorphic \iif $\j(\phi) =
+			\j(\psi)$.
+		\item $\phi$ and $\psi$ are $K$-isogeneous \iif $\chi(\phi) =
+			\chi(\psi)$. \qed
+	\end{itemize}
+	If furthermore $\phi$ and $\psi$ are rank-two and ordinary, then they are
+	$K$-isomorphic \iif $(\j(\phi), \chi(\phi)) = (\j(\psi), \chi(\psi))$.
+\end{proposition}
+
+\begin{nfproof}
+	The first item is \cite[Th. 3.5]{Gek91}, the second is \cite[p.
+	286]{caranay-article} and the third is a consequence of the two first and
+	of Prop. \ref{prop-isoiso}.
+\end{nfproof}
+
+In other words, $K$-isogeny classes are encoded by $\j$-invariants,
+$\Kbar$-isomorphism classes are encoded by characteristic polynomials, and
+$K$-isomorphism classes are encoded both a $\j$-invariant and a characteristic
+polynomial. In this paper, we make no distinction between those classes and
+their representations, as well as between classes and representatives.
+
+From Prop. \ref{prop-isoiso}, $\Cchi$ is the set of $\j$-invariants sharing a
+same characteristic polynomial.
+
+\paragraph{Construction of the action} To define the group action
+\[\Cl\left(A\big/\langle\chi\rangle\right) \times \Cchi \to \Cchi,\] we
+iteratively build intermediate functions according to the following "diagram":
+% https://q.uiver.app/?q=WzAsNCxbMCwwLCJcXElkXipcXGxlZnQoQVxcYmlnL1xcbGFuZ2xlXFxjaGlcXHJhbmdsZVxccmlnaHQpIFxcdGltZXMgXFxEcmluZGVmIFxcdG8gXFxEcmluZGVmIl0sWzAsMSwiXFxJZF4qXFxsZWZ0KEFcXGJpZy9cXGxhbmdsZVxcY2hpXFxyYW5nbGVcXHJpZ2h0KSBcXHRpbWVzIFxcQ2NoaSBcXHRvIFxcQ2NoaSJdLFswLDIsIlxcRnJhY0lkXFxsZWZ0KEFcXGJpZy9cXGxhbmdsZVxcY2hpXFxyYW5nbGVcXHJpZ2h0KSBcXHRpbWVzIFxcQ2NoaSBcXHRvIFxcQ2NoaSJdLFswLDMsIltcXENsXFxsZWZ0KEFcXGJpZy9cXGxhbmdsZVxcY2hpXFxyYW5nbGVcXHJpZ2h0KSBcXHRpbWVzIFxcQ2NoaSBcXHRvIFxcQ2NoaSJdLFswLDEsIiIsMCx7InN0eWxlIjp7ImJvZHkiOnsibmFtZSI6ImRvdHRlZCJ9fX1dLFsxLDIsIiIsMCx7InN0eWxlIjp7ImJvZHkiOnsibmFtZSI6ImRvdHRlZCJ9fX1dLFsyLDMsIiIsMCx7InN0eWxlIjp7ImJvZHkiOnsibmFtZSI6ImRvdHRlZCJ9fX1dXQ==
+\[\begin{tikzcd}
+	{\Fchi{1}: \Id^*\left(R\right) \times \Drin2 \to \Drin2} \\
+	{\Fchi{2}: \Id^*\left(R\right) \times \Cchi \to \Cchi} \\
+	{\Fchi{3}: \FracId\left(R\right) \times \Cchi \to \Cchi} \\
+	{\Fchi{4}: \Cl\left(R\right) \times \Cchi \to \Cchi}
+	\arrow[dotted, from=1-1, to=2-1]
+	\arrow[dotted, from=2-1, to=3-1]
+	\arrow[dotted, from=3-1, to=4-1]
+\end{tikzcd}\]
+
+Before the actual work, we must define a few notations. In all this paragraph,
+fix $I, I'\in\Id^*(R)$ two non-zero ideals and $\phi\in\Drin2$ a Drinfeld
+module. 
+
+% \begin{definition}
+% 	Let $\pi$ be the canonical projection $\Fq[S, T]\onto\Fqchi$.
+% \end{definition}
+
+\begin{definition}
+	For every ideal $I\in \Id^*(R)$ and every $\j$-invariant $j\in\Cchi$,
+	denote \[\VchiIj := \bigcap_{f\in \pi^{-1}(I)}
+	\Ker_\Kbar\left(f\left(\phi_X^{(j)}, \tau_K\right)\right).\]
+\end{definition}
+
+Define $\Fchi{1}$ as 
+
+\begin{align*}
+	\Fchi{1}: \Id\left(\Fq[S, T]\right) \times \Cchi &\to \Cchi \\
+	(I, \phi) &\mapsto \VchiIj \cdot \phi.
+\end{align*}
+
+The first step is proving that $\Fchi{1}$ behaves like a group action; this is
+Prop. \ref{prop-f1chi-group-action}. To prove this, we need a few lemmas. We
+have the following Drinfeld-module-isogeny diagram, with $A, B, C$ being the
+unitary isogenies given by Prop. \ref{prop-drinmod-subspace}.
+
+% https://q.uiver.app/?q=WzAsNCxbMCwwLCJqIl0sWzIsMCwiSVxcY2RvdCBqIl0sWzAsMiwiSUknXFxjZG90IGoiXSxbMiwyLCJJJ1xcY2RvdChJXFxjZG90IGopIl0sWzAsMSwiR197SSwgan0gPTogQiJdLFswLDIsIkdfe0lJJywgan0gPTogQSIsMl0sWzEsMywiR197SScsIChJYFxcY2RvdCBqKX0gPTogQyJdXQ==
+\[\begin{tikzcd}
+	j && {\Fchi{1}\left(I, \phi\right)} \\
+	\\
+	{\Fchi{1}\left(II', \phi\right)} && {\Fchi{1}\left(I', \Fchi{1}\left(I,
+			\phi\right)\right)}
+	\arrow["{B}", from=1-1, to=1-3]
+	\arrow["{A}"', from=1-1, to=3-1]
+	\arrow["{C}", from=1-3, to=3-3]
+\end{tikzcd}\]
+
+To prove Prop. \ref{prop-f1chi-group-action}, we prove that the isogenies $CB$
+and $A$ are the same --- as they are defined on the same Drinfeld module, they
+must have the same image. To do so, we prove that they have the same kernel.
+
+\begin{lemma}\label{lemma-1}
+	For every polynomial $f'\in \pi^{-1}(I')$, we have \[f'\left(\Fchi{1}(I,
+	\phi)_X, \tau_K\right) B = B f'\left(\phi_X,\tau_K\right).\]
+\end{lemma}
+
+\begin{nfproof}
+	Write $f' = \sum_{m,n} a_{m,n} X^m Y^n$. Then
+	\begin{align*}
+		f'\left(\Fchi{1}(I, \phi)_X, \tau_K\right) B
+		& = \sum_{m, n} a_{m,n} \left(\Fchi{1}(I, \phi)\right)_X^m {\tau_K}^n
+				B \\
+		& = \sum_{m, n} a_{m,n} \left(\Fchi{1}(I, \phi)\right)_X^m B {\tau_K}^n
+				\eqcomment{, $\tau_K$ commutes with everything} \\
+		& = \sum_{m, n} a_{m,n} B \phi_X^m {\tau_K}^n \eqcomment{, $B$ is an
+				isogeny} \\
+		& = B \sum_{m, n} a_{m,n} \phi_X^m {\tau_K}^n \eqcomment{, $a_{m, n}$'s
+				are in $\Fq$ so they commute with everything} \\
+		& = B f'\left(\phi_X, \tau_K\right).
+	\end{align*}
+\end{nfproof}
+
+\begin{lemma}\label{lemma-2}
+	For every polynomial $f'\in\pi^{-1}(I')$, we have
+	\[\Ker\left(Bf'\left(\phi_X, \tau_K\right)\right) \subset \bigcap_{f \in
+	\pi^{-1}(I)} \Ker\left((ff')\left(\phi_X, \tau_K\right)\right).\]
+\end{lemma}
+
+\begin{nfproof}
+	Straightforward. Let $x\in\Kbar$. We have
+	\begin{align*}
+		Bf'\left(\phi_X, \tau_K\right)(x) = 0
+		& \Rightarrow \forall f\in\pi^{-1}(I), f\left(\phi_X, \tau_K\right) B
+				f'\left(\phi_X, \tau_K\right)(x) = 0 \\
+		& \Rightarrow \forall f\in\pi^{-1}(I), f\left(\phi_X, \tau_K\right)
+				f'\left(\phi_X, \tau_K\right)(x) = 0, \eqcomment{$B$ is a
+				generator of $\{f(\phi_X,\tau_K), f\in\pi^{-1}(I)\}$,} \\
+		& \Rightarrow \forall f\in\pi^{-1}(I), (ff')\left(\phi_X,
+				\tau_K\right)(x) = 0 \eqcomment{, coefficients of $f, f'$ are
+				in $\Fq$: they commute with everything}
+	\end{align*}
+\end{nfproof}
+
+\begin{lemma}\label{lemma-kera-kerbc}
+	We have \[\Ker(A) = \Ker(CB).\]
+\end{lemma}
+
+\begin{nfproof}
+	Double inclusion.
+
+	Let $x\in\Ker(A)$, we want, for every $f'\in \pi^{-1}(I')$, \[x \in
+	\Ker\left(f'\left(\Fchi{1}(I, \phi)_X, \tau_K\right)B(x)\right).\] Let then
+	$f'\in \pi^{-1}(I')$. From Lemma \ref{lemma-1} we have \[x \in
+	\Ker\left(f'(\Fchi{1}(I, \phi)_X, \tau_K)(B(x)\right) \Longleftrightarrow
+	\forall f\in \pi^{-1}(I), \Ker\left((ff')\left(\phi_X^{(j)},
+	\tau_K\right)\right).\] But $x\in \Ker(A)$, i.e. \[\forall h \in
+	\pi^{-1}(II'), \quad x \in \Ker\left(h(\phi_X, \tau_K)\right).\] But for
+	every $f\in \pi^{-1}(I)$, $ff' \in \pi^{-1}(II')$\footnote{We have an
+	inclusion $\pi^{-1}(I)\pi^{-1}(I') \subset \pi^{-1}(II')$. How do you know
+	this is not generally an equality? Well, that's because only one inclusion
+	is given in Atiyah-Macdonald.}, which concludes the first inclusion.
+
+	Let $x\in\Ker(CB)$, we want, for every $h\in \pi^{-1}(II')$, \[x \in
+	\Ker\left(h\left(\phi_X^{(j)}, \tau_K\right)\right).\] 
+
+	We have \[\pi^{-1}(II') = \pi^{-1}(I)\pi^{-1}(I') +
+	\langle\chi\rangle_{\Fq[X, Y]},\] hence \[\bigcap_{h\in\pi^{-1}(II')}
+	\Ker\left(h\left(\phi_X, \tau_k\right)\right) =
+	\bigcap_{h\in\pi^{-1}(I)\pi^{-1}(I')} \Ker\left(h\left(\phi_X,
+	\tau_k\right)\right).\] As $\pi^{-1}(I)\pi^{-1}(I')$ is generated by the
+	products $ff', (f, f')\in \pi^{-1}(I)\times \pi^{-1}(I')$, it is sufficient
+	to consider every polynomial $h$ written as such a product $ff'$, so that
+	we want, for every fixed $f'\in \pi^{-1}(I')$, \[x \in \bigcap_{f\in
+	\pi^{-1}(I)} \Ker\left((ff')\left(\phi_X^, \tau_K\right)\right).\] This is
+	equivalent to \[x\in\Ker\left(B f'\left(\phi_X^,\tau_K\right)\right)\] from
+	Lemma \ref{lemma-1}, which implies \[x\in\Ker\left(f'\left(\Fchi{1}(I,
+	\phi)_X, \tau_K\right) B\right)\] from Lemma \ref{lemma-2}. This is true,
+	by hypothesis, and we are done.
+
+\end{nfproof}
+
+\begin{proposition}\label{prop-f1chi-group-action}
+	We have \[\Fchi{1}\left(II', \phi\right) =
+	\Fchi{1}\left(I',\Fchi{1}\left(I, \phi\right)\right).\]
+\end{proposition}
+
+\begin{nfproof}
+	All the hard work has been made in the lemmas. From Lemma
+	\ref{lemma-kera-kerbc}, the Drinfeld module isogenies $CB$ and $A$ defined
+	on $j$ are the same. Therefore, the Drinfeld modules they define with Prop.
+	\ref{prop-mod-vec-iso} are the same. But those are exactly
+	$\Fchi{1}\left(II', j\right)$ and $\Fchi{1}\left(I',\Fchi{1}\left(I,
+	j\right)\right)$, finishing the proof.
+\end{nfproof}
+
+\begin{proposition}
+	We have \[\Fchi{1}(R, \phi) = \phi.\]
+\end{proposition}
+
+\begin{nfproof}
+	This is because $\mathrm{V}_{R, \phi} = \{0_{\Fq[X, Y]}\}$ and $\{0_{\Fq[X,
+	Y]}\}\cdot\phi$ is always\footnote{Ça se vérifie facilement et c'est en
+	note de \texttt{drinmod-torsion-subspace}.} $\phi$.
+\end{nfproof}
+
+To define $\Fchi2$, we need the following results.
+
+\begin{lemma}\label{lemma-lambda-ker-isomorphism}
+	Let $\phi,\phi'\in\Drin2$ be two Drinfeld modules and $\lambda\in\Kbar$ an
+	isomorphism $\phi\to\phi'$. Then, for every ideal $I\in\Id^*(R)$, the
+	homothetie \[\lambda\Id: V_{I, \phi} \to V_{I, \phi'}\] is a well-defined
+	$\Fq$-vector-space isomorphism.
+\end{lemma}
+
+\NTS{Définir $\tau_K$}
+
+\begin{nfproof}
+
+	Let $f\in\pi^{-1}(I)$ and write $f = \sum_{m,n} f_{m,n} X^m Y^n$. By
+	hypothesis, we have \[\phi_X' = \lambda \phi_X \lambda^{-1},\] so that
+
+	\begin{align*}
+		f(\phi_X', \tau_K) &= f(\lambda \phi_X \lambda^{-1}, \tau_K) \\
+		&= \sum_{m,n} f_{m,n} (\lambda\phi_X \lambda^{-1})^m \tau_K^n \\
+		&= \sum_{m,n} f_{m,n} \lambda\phi_X^m \lambda^{-1} \tau_K^n \\
+		&= \lambda \sum_{m,n} f_{m,n} \phi_X^m \lambda^{-1} \tau_K^n \\
+		&= \lambda \sum_{m,n} f_{m,n} \phi_X^m \tau_K^n \lambda^{-1} \\
+		&= \lambda f(\phi_X, \tau_K) \lambda^{-1} \\
+	\end{align*}
+
+	As $\lambda$ is non-zero, the application $\lambda\Id$ is injective, and,
+	\[\Ker_\Kbar\left(f(\phi_X', \tau_K)\right) = \Ker_\Kbar(f\left(\phi_X,
+	\tau_K)\lambda^{-1}\right).\]
+
+	As $V_{I, \phi} = \bigcap_{f \in \pi^{-1}(I)} \Ker\left(f(\phi_X,
+	\tau_K)\right)$, the conclusion now comes easilly.
+\end{nfproof}
+
+
+\begin{proposition}\label{prop-F1chi-iso-Cchi}
+	Let $\phi,\phi'\in\Drin2$ be two Drinfeld modules, with characteristic
+	polynomial $\chi$, that are $\Kbar$-isomorphic. Then, for every ideal
+	$I\in\Id^*(R)$, the images $\Fchi1(I, \phi)$ and $\Fchi1(I, \phi')$ are
+	$\Kbar$-isomorphic.
+
+	If $\lambda \in \Kbar$ is the isomorphism $\phi\to\psi'$, then $\lambda^{\#
+	V_{I, \phi}}$ is a well-defined isomorphism $\Fchi1(I, \phi)\to\Fchi1(I,
+	\phi')$, such that the following diagram commutes:
+
+	\[\begin{tikzcd}
+		\phi & {\Fchi1(I,\phi)} \\
+		{\phi'} & {\Fchi1(I,\phi')}
+		\arrow["u", from=1-1, to=1-2]
+		\arrow["\lambda"', from=1-1, to=2-1]
+		\arrow["{u'}"', from=2-1, to=2-2]
+		\arrow["\lambda^{\# V_{I, \phi}}", from=1-2, to=2-2]
+	\end{tikzcd}\]
+\end{proposition}
+
+\begin{nfproof}
+	Let $I\in\Id^*(R)$. To lighten notations, fix
+
+	\[\begin{cases}
+		\psi := \Fchi1(I, \phi) \\
+		\psi' := \Fchi1(I, \phi'),
+	\end{cases}\]
+
+	let $u, u'$ respectively be the unitary isogenies $\phi\to\psi$,
+	$\phi'\to\psi'$ given by Prop. \ref{prop-drinmod-subspace} and fix $V =
+	V_{I, \phi}$, $V = V_{I, \phi'}$.
+
+	Some analysis shows that $\lambda^{\# V}$ is the only possible value for
+	the desired isomorphism, which we call $\mu$. Indeed, $\mu$ is an isogeny
+	$\psi\to\psi'$ \iif\footnote{If $\mu u$ is an isogeny, then $\mu u\phi =
+	\mu\psi u$ (as $u$ is an isogeny $\phi\to\psi$). Multiplying on the right
+	by the inverse of $u$ in the right-field of fraction of $\Ktau$ (see
+	\cite[Section 4.11]{Gos98}) asserts that $\mu$ is an isogeny
+	$\psi\to\psi'$. The other implication is trivial.} $\mu u$ is an isogeny
+	$\phi\to\psi'$. This is what we prove.
+
+	Recall (see Prop. \ref{prop-drinmod-torsion}) that, as applications, for
+	all $x\in\Kbar$ we have \[u(x) = \prod_{v in V}(x + v).\] From Lemma
+	\ref{lemma-lambda-ker-isomorphism}, we further have \[u'(x) = \prod_{v \in
+	V}(\lambda x + v).\]
+
+	Now, we calculate:
+	\begin{align*}
+		\mu u \phi_X(x) &= \lambda^{\# V} \prod_{v\in V}(\phi_X(x) + v) \\
+		&= \prod_{v\in V} (\lambda \phi_X(x) + \lambda v) \\
+		&= \prod_{v'\in V'} (\lambda \phi_X(x) + v') \\
+		&= u'(\lambda \phi_X(x)) \\
+		&= u'\lambda\phi_X(x) \\
+		&= \psi'_Xu'\lambda (x) \\
+		&= \psi'_X\left(\prod_{v'\in V'}(\lambda x + v')\right) \\
+		&= \psi'_X\left(\prod_{v\in V}(\lambda x + \lambda v)\right) \\
+		&= \psi'_X\left(\lambda^{\# V}\prod_{v\in V}(x + v)\right) \\
+		&= \psi'_X\left(\lambda^{\# V} u(x)\right) \\
+		&= \psi'_X\mu u(x).
+	\end{align*}
+	This proves that $\mu u$ is an isogeny $\phi\to\psi'$, and we are done.
+\end{nfproof}
+
+With this proposition in hand, we can naturally extend $\Fchi1$ as we wish.
+
+\begin{definition}
+	Define $\Fchi2$ as
+	\begin{align*}
+		\Fchi2: \Id^*(R)\times\Cchi &\to\Cchi \\
+		(I, j) &\mapsto \j\left(\Fchi1(I, \phi)\right),
+	\end{align*}
+	where $\phi$ is any Drinfeld-module in $\Drin2$ of $\j$-invariant is $j$.
+\end{definition}
+
+This function is well-defined thanks to Prop. \ref{prop-F1chi-iso-Cchi}, and we
+have the relation \[\Fchi2(I, \j(\phi)) = \j\left(\Fchi1(I, \phi)\right)\] for
+every ideal $I\in\Id^*(R)$ and every Drinfeld module $\phi\in\Drin2$ with
+characteristic polynomial $\chi$.
+
+For every $\j$-invariant $j\in K$, there exists a canonical representative in
+$\Drin2$:
+
+\begin{definition}
+	Given a $j$-invariant $j\in \Kbar$, denote $\phij$ to be the unique
+	rank-two Drinfeld module $A\to \Kbartau$ such that 
+	\[\phij = 
+		\begin{cases}
+			\omega + \tau + j^{-1}\tau^2\text{ if } j \neq 0, \\
+			\omega + \tau^2 \text{ if } j = 0.
+		\end{cases}
+	\]
+	Now given an ideal $I\in\Id^*(R)$, we note \[V_{I, j} := V_{I, \phij}.\]
+\end{definition}
+
+Therefore, given $(I, j)\in \Id^*(R)\times K$, we have \[\Fchi2(I, j) =
+\j\left(V_{I, j} \cdot \phij\right).\] The group action-like properties of
+$\Fchi1$ are transmitted to $\Fchi2$, in the sense that for every two ideals
+$I,I'\in \Id^*(R)$ and every $\j$-invariant $j\in K$, we have
+
+\[\begin{cases}
+	\Fchi2(II', j) = \Fchi2(I', \Fchi2(I', j)), \\
+	\Fchi2(R, j) = j.
+\end{cases}\]
+
+Furthermore, we observe that $\Fchi2$ is trivial for every principal ideal, in
+the sense of the following proposition.
+
+\begin{proposition}\label{prop-Fchi2-principal-ideal}
+	Let $I\in \Id^*(R)$ and $j\in\Cchi$. If $I$ is principal, then \[\Fchi2(I,
+	j) = j.\]
+\end{proposition}
+
+\begin{nfproof}
+	Let $\pi(\alpha)$ be a generator of $I$. Then we have \[\pi^{-1}(I) =
+	\alpha \Fq[X, Y] + \chi \Fq[X, Y\] and therefore 
+
+	\begin{align*}
+		V_{I, j} &= \bigcap_{a, b\in \Fq[X, Y]}\Ker_\Kbar\left(a\alpha
+				(\phij_X, \tau_K) + b \chi (\phij_X, \tau_K)\right) \\
+		&= \bigcap_{a\in\Fq[X, Y]}\Ker_\Kbar\left(a\alpha(\phij_X,
+				\tau_K)\right) \\
+		&= \Ker_\Kbar\left(\alpha(\phij_X, \tau_K)\right).
+	\end{align*}
+
+	If we pick $\alpha$ to be unitary --- which is always possible\footnote{For
+	every $\lambda\in\Fq$, $\pi(\lambda \alpha)$ is still a generator of $I$.}
+	--- then the isogeny $u: \phij\to \Fchi1(I, \phij)$ given by Prop.
+	\ref{prop-drinmod-subspace} is exactly $\alpha(\phij_X, \tau_K)$. But,
+	observe that $\alpha$ has coefficients in $\Fq$ and that both $\tau_K$ and
+	$\phij_X$ commute with $\phij_X$. This ensures that $\alpha(\phij_X, j)$ is
+	an endomorphism of $\phij$. Therefore, \[\Fchi2(I, j) = \j(\Fchi1(I,
+	\phi_j)) = \j(\phij) = j.\]
+\end{nfproof}
+
+With this property, we are able to do two things, namely: extend $\Fchi2$ to
+all the fractional ideals ($\Fchi3$), then defining it ($\Fchi4$) on the class
+group of $R$.
+
+\begin{definition}
+	Define $\Fchi3$ as
+	\begin{align*}
+		\Fchi3: \FracId(R)\times\Cchi &\to\Cchi \\
+		(r^{-1}I, j) &\mapsto \Fchi2(I, j),
+	\end{align*}
+	where $r\in R$ and $I\in\Id^*(R)$.
+\end{definition}
+
+If we want our action to be trivial on any principal ideal, even fractional,
+this is the only possible definition. We must however ensure that this
+definition does not depend on the choice of $r$ and $I$, as a fractional ideal
+can be represented in multiple ways.
+
+\begin{proposition}
+	The function $\Fchi3$ is well defined; it is a group-action, and it is
+	trivial on the principal ideals.
+\end{proposition}
+
+\begin{nfproof}
+	Let $I, I'\in\Id^*(R)$ be two ideals and $r, r'\in\Fq[X, Y]$ be two
+	polynomials such that \[r^{-1} I = r'^{-1}I'.\] Fix $j\in\Cchi$. Then $r'I
+	= rI'$ and 
+
+	\begin{align*}
+		\Fchi2(I, j) &= \Fchi2(r'R, \Fchi2(I, j)) \\
+		&= \Fchi2(r'I, j) \\
+		&= \Fchi2(rI', j) \\
+		&= \Fchi2(rR, \Fchi2(I', j)) \\
+		&= \Fchi2(I', j).
+	\end{align*}
+
+	The fact that it is a group action has already been discussed, but let's
+	review this; fix $j\in\Cchi$. The neutral element of the considered group
+	is $R$, and we have \[\Fchi3(R, j) = \Fchi2(R, j) = j.\] Let now $r,
+	r'\in\Fq[X, Y]$ and $I, I'\in \Id^*(R)$. Then
+
+	\begin{align*}
+		\Fchi3\left(r^{-1}I r'^{-1} I', j\right) &= \Fchi3\left((rr')^{-1}II',
+				j\right) \\
+		&= \Fchi2(II', j) \\
+		&= \Fchi2(I', \Fchi2(I, j)) \\
+		&= \Fchi3(r'I', \Fchi3(rI, j)).
+	\end{align*}
+
+	The last part is a direct consequence of the definition of $\Fchi3$ w.r.t.
+	$\Fchi2$ and of Prop. \ref{prop-F2chi-principal-ideal}. This finishes the
+	proof.
+\end{nfproof}
+
+With this result, we may finally define $\Fchi4$.
+
+\begin{definition}
+	Define $Fchi4$ as 
+
+	\begin{align*}
+		\Fchi4: \FracId(R)\times\Cchi &\to\Cchi \\
+		(I\mod \Pr(R), j) &\mapsto \Fchi3(I, j).
+	\end{align*}
+\end{definition}
+
+With this definition and the work we have already done, it is easy to check
+that $\Fchi4$ indeed is a group action --- this is left to the reader.
+
+We can now give an explicit formula for our group action. We have:
+\begin{align*}
+	\Fchi4: \FracId(R)\times\Cchi &\to\Cchi \\
+	(r^{-1}I\mod \Pr(R), j) & \mapsto
+			\j\left(\left(\bigcap_{f\in\pi^{-1}(I)}\Ker_\Kbar(\phij_X,
+			\tau_K)\right)\cdot \phij\right).
+\end{align*}
+
+I've seen enough. I'm satisfied.
+
+\section{Omg it's free}
+
+Ok not so fast. We still want our action to be free and transitive. This is
+true in some cases.
+
+\begin{lemma}\label{lemma-ordin-end-struct}
+	Let $\phi\in\Drin2$ be a rank-two Drinfeld module. If $\chi(\phi)$
+	\NTS{verifies something}, then \[\End_\Kbar(\phi) = \Fq[\phi_X, \tau_K].\]
+\end{lemma}
+
+\begin{nfproof}
+	\NTS{Todo}
+\end{nfproof}
+
+\begin{lemma}\label{lemma-ore-ker-div}
+	Let $P,Q \in\Ktau$ be two Ore polynomials. Then \[\Ker(P)\subset\Ker(Q)
+	\Longleftrightarrow P\mid_\mathrm{R} Q.\]
+\end{lemma}
+
+\begin{nfproof}
+	\NTS{Todo}
+\end{nfproof}
+
+\begin{lemma}
+	Let g$\in\Pr(R)$ and $\phi\in\Drin2$ such that $\chi(\phi) = \chi=$. If
+	$\chi$ \NTS{verifies something}, then \[g\ast \phi = \phi
+	\Longleftrightarrow g = 1.\]
+\end{lemma}
+
+\begin{nfproof}
+
+	We will extensively use the following facts: $\deg_\tau(\tau_K) = 2g+1$ and
+	$a(\phi_X) = \phi_a$ for any $a\in A$.
+
+	By hypothesis, the isogeny $u_{I, \phi}:\phi\to\phi$ is an endomorphism;
+	from Lemma \ref{lemma-ordin-end-struct}, it is therefore of the form
+	\[u_{I, \phi} = f(\phi_X, \tau_K)\] for some polynomial $f\in I$. By
+	Euclidean division\footnote{With a lexicographic order such that $Y> X$.}
+	of this $f$ by $\chi$, we can assume $f$ to be of the form \[f = \alpha(X)
+	Y + \beta(X)\] for some polynomials $\alpha, \beta\in\Fq[X]$.
+
+	Under the assumption\footnote{This asumption is dealt with at the end of
+	the proof.} that $g$ has a representative $I\in\Id^*(R)$ that is ordinary,
+	the polynomial $f$ is, in fact, an invertible constant in $\Fq$. Let $[u,
+	v]$ be the Mumford coordinates of $g$. It is crucial to note that we can
+	choose those such that
+
+	\[\begin{cases}
+		\deg_X(v) \leq \deg_X(u) \leq g, \\
+		Y - v(X) \equiv 0 \pmod{u}.
+	\end{cases}\]
+
+	From \NTS{some theorem}, the equality \[I = \langle \pi(u(X)), \pi(Y -
+	V(X))\rangle,\] holds.
+
+	\begin{nfproof}[($f\in\Fq\times$)]
+
+		We first prove that $\alpha = 0$. As $\Ker(f(\phi_X, \tau_K)) \subset
+		\Ker(u(\phi_X))$ because $u\in I$, Lemma \ref{lemma-ore-ker-div}
+		ensures that there exists $\xi \in\Ktau$ such that \[u(\phi_X) = \xi
+		(\alpha(\phi_X)\tau_K + \beta(\tau_K)).\] Assume that $\alpha\neq 0 $,
+		then looking at the $\tau$-degrees of both sides yiels \[\deg_\tau(\xi)
+		+ \deg_\tau(\phi_\alpha \tau_K + \phi_\beta) \leq 2 g.\] Note that
+		$\phi_\alpha\tau_K$ has a $\tau$-degree $\geq 2g+1$. Therefore, its
+		leading $\tau$-term must be 'canceled out' by some $\tau$-term from
+		$\phi_v$. This $\tau$-term from $\phi_v$ may only be its leading
+		$\tau$-term\footnote{If this is not the case, then $\phi_v$ has an
+		$\tau$-term with $\tau$-degree $\geq 2g+1$, which is impossible.}.  As
+		this term has even $\tau$-degree, this is impossible. Therefore, our
+		assumption that $\alpha\neq 0$ is wrong, and we have \[f(X, Y) =
+		\beta(X).\]
+
+		We then prove that $\beta$ is constant and invertible. As previously,
+		there exists $\zeta\in\Ktau$ such that \[\tau_K - v(\phi_X) = \zeta
+		\beta(\phi_X).\] Given this equation, it is easy\footnote{Just write
+		the definitions.} to show that $\zeta$ is an endomorphism of the form
+		\[\zeta = \gamma(\phi_X)\tau_K + \delta(\phi_X)\] for some polynomials
+		$\gamma,\delta \in \Fq[X]$. Substitating those values and using the
+		fact that $\phi: A\to\Ktau$ is a $\Fq$-algebra morphism and that
+		$\tau_K$ commutes with any element of $\Ktau$, we have \[\tau_K\phi_{1
+		- \gamma\beta} = \phi_{\delta\beta + v}.\] Still by looking at the
+		$\tau$-degrees of both sides of the equation, $\phi_{1 - \gamma\beta}$
+		must be zero, and therefore $1 - \gamma\beta$ must be zero; $\beta$ has
+		no other choice then than to be non-zero. Therefore, we proved that
+		\[f(X, Y) \in \Fq.\]
+	\end{nfproof}
+
+	This allows us to prove that $I = R$.
+	\begin{nfproof}[]
+		 To do this, we prove that $u$ is an invertible constant of $\Fq$.
+		 Assume that $u$ is a non-constant polynomial. Then it must have an
+		 irreducible monic divisor $r\in\Fq[X]$. From \NTS{some theorem}, $r$
+		 is coprime to the $A$-characteristic of $K$, and there
+		 exists\footnote{V.  notes perso.} a $r$-vector space isomorphism
+		 \[\phi[r] \simeq \left(A/rA\right)^2.\] But on this vector space, the
+		 equation $\tau_K - \phi_v \neq 0 \pmod{u}$ implies that $v$ is an
+		 eigenvalue of $\tau_K$, which is associated to a non-zero eigenvector
+		 $x\in\Kbar\times$. This eigenvector verifies
+
+		\[\begin{cases}
+			\phi_u(x) = 0, \\
+			(\tau_K - \phi_v)(x) = 0.
+		\end{cases}\]
+
+		As \[I = \langle \pi(u(X)), \pi(Y - V(X))\rangle\] and \[\Ker(f) =
+		\bigcap_{g\in\pi^{-1}(I)}\Ker(g(\phi_X, \tau_K)),\] we necessarily have
+		$f(x, \tau_K) = 0$, which is impossible as we proved $f$ to be a
+		non-zero constant. Therefore, our assumption that $u$ is non constant
+		is false. It is non-zero \NTS{for some reason}. Since it is (trivially)
+		contained in $I$, $I$ is therefore $R$.
+	\end{nfproof}
+
+	Our work is almost done. To get rid of the hypothesis that $I$ is ordinary,
+	just recall that if it is not, we can find $\lambda\in\Fq^\times$ such that
+	$\lambda^{-1} I$ is ordinary; but this ideal equals $R$. Therefore, $I =
+	\lambda R$, which is obviously principal. And we are done
+\end{nfproof}
+
+\begin{proposition}
+	If $\chi$ \NTS{verifies something}, then the action $\Fchi4: \Pr(R) \times
+	\Cchi \to \Cchi$ is free.
+\end{proposition}
+
+\begin{nfproof}
+	\NTS{Todo}
+\end{nfproof}
+
+\NTS{Finish}
+
+\section{r/traa}
+
+\begin{lemma}\label{l-gcd-phi}
+	Let $r\in\N$ and $\phi\in\Drin{r}$ a Drinfeld module. For every polynomials
+	$a, b\in A$, we have \[\phi[a]\cap\phi[b] = \phi[\gcd(a, b)].\]
+\end{lemma}
+
+\begin{nfproof}
+	By double-inclusion. For the first one, by Bézout's theorem, there exists
+	polynomials $u,v\in A$ such that $au + bv = \gcd(a, b)$. Then
+	\[\phi_{\gcd(a, b)} = \phi_u\phi_a + \phi_v\phi_b,\] from which we
+	conclude.
+
+	For the other inclusion, $\gcd(a, b)$ divides both $a$ and $b$, which
+	ensures that $\phi_{\gcd(a, b)}$ right-divides both $\phi_a$ and $\phi_b$.
+\end{nfproof}
+
+\begin{proposition}
+	The group action is transitive.
+\end{proposition}
+
+\begin{nfproof}
+
+	We wish to prove that for every two $x, y\in\Cchi$, there exists
+	$g\in\Pr(R)$ such that $g\ast x = y$, i.e. that for every two isogeneous
+	$\phi,\psi \in\Drin2$, there exists a fractional ideal $I$ of $R$ such that
+	such that \[\overline{I} \ast \Isom_K(\phi) = \Isom_K(\psi).\] We prove
+	this result with an induction on the $\tau$-degree of the considered
+	isogeny.
+
+	If there exists an isogeny $\phi\to\psi$ with $\tau$-degree $0$, then the
+	result is true. Such an isogeny is an isomorphism and $0_{\Cl(R)}$ sends
+	$\Isom_K(\phi)$ to $\Isom_K(\psi)$.
+
+	Now assume that the result is proved for every integer up-to $d-1$, with
+	$d\in\N^*$. Let $u:\phi\to\psi$ be an isogeny with $\tau$-degree $d$; let
+	$n\in A$ its norm, i.e. the polynomial in $A$ such that \[\hat{u} u =
+	\phi_n.\] The idea of the proof is to obtain "smaller" isogenies
+	$u':\phi\to\psi$ that arise from irreducible divisors of $n$. Let $r\in A$
+	be an irreducible divisor or $n$; it is easy\footnote{The fact that $V$ is
+	an abelian group is obvious, as the addition on $\phi[r]$ is the same as
+	that on $\Kbar$. For the scalar-multiplication-stability, let $\overline{f}
+	\in \Fq[X]/\langle r\rangle$ and $x\in V$. Then $u (\phi_f(x)) = \psi_f u
+	(x) = \psi_f(0) = 0$ and $\psi_r (\psi_f(x)) = \psi_f \psi_r(x) = \psi_f(0)
+	= 0$.} to prove that \[V := \Ker(u)\cap\phi[r]\] is a sub-$\Fq[X]/\langle
+	r\rangle$-vector space of $\phi[r]$; $\dim(V)$ is either\footnote{The
+	$r$-torsion is isomorphic to either $\Fq[X]/\langle r\rangle$ or to
+	$\Fq[X]/\langle r\rangle$ depending the $A$-characteristic of $K$.} $0$,
+	$1$ or $2$. The result is true in any of those cases.
+
+	\begin{nfproof}[($\dim V = 0$)]
+		If $\Ker(\hat{u}) = \phi[n]$, then $u$ has $\tau$-degree $0$, and we
+		already solved this case.
+
+		If $\Ker(\hat{u}) \subset\neq \phi[n]$ we can find $x\in\phi[r]$ such
+		that $\hat{u}(x) \neq 0$. Then $\hat{u}(x)$ is in $V$ while being
+		non-zero. This contradicts the fact that $\dim V$ = 0; contradiction,
+		and this sub-case is proved.
+	\end{nfproof}
+
+	\begin{nfproof}[($\dim V = 1$)]
+		Recall that there exists a Drinfeld module $\psi'\in\Drin2$ and an Ore
+		polynomial $u'\in \Ktau$ such that \[u': \phi\to\psi'\] is an isogeny
+		and \[\Ker(u') = V.\]
+
+		We wish to complete the following diagram:
+
+		% https://q.uiver.app/?q=WzAsMyxbMCwwLCJcXHBoaSJdLFsyLDAsIlxccHNpIl0sWzEsMSwiXFxwc2knIl0sWzAsMSwidSJdLFswLDIsInUnIiwyXSxbMiwxLCI/IiwxLHsic3R5bGUiOnsiYm9keSI6eyJuYW1lIjoiZG90dGVkIn19fV1d
+		\[\begin{tikzcd}
+			\phi && \psi \\
+			& {\psi'}
+			\arrow["u", from=1-1, to=1-3]
+			\arrow["{u'}"', from=1-1, to=2-2]
+			\arrow["{?}"{description}, dotted, from=2-2, to=1-3]
+		\end{tikzcd}\]
+
+		For this, consider the Euclidean division \[u = u'' u' + r,\] with
+		$\deg_\tau(r) < \deg_\tau(u')$. However, any element in $V$ cancels $u$
+		and $u'$. Therefore, $r(x) = 0$ for any element $x\in V$, yet \[\# V =
+		\deg_X(u') > \deg_X(r').\] Therefore, $r$ has no choice but to be
+		identically $0$, and the following diagram commutes:
+
+		\[\begin{tikzcd}
+			\phi && \psi \\
+			& {\psi'}
+			\arrow["u", from=1-1, to=1-3]
+			\arrow["{u'}"', from=1-1, to=2-2]
+			\arrow["{u''}"{description}, from=2-2, to=1-3]
+		\end{tikzcd}\]
+
+		From now on, two possibilities: either one of $u'$ or $u''$ has
+		$\tau$-degree $0$ and we already solved this case, either both $u'$ and
+		$u''$ have a $\tau$-degree $< \deg_\tau(u)$. For this case, we conclude
+		by applying the induction hypothesis on both $u'$ and $u''$: they
+		respectively give rise to fractional ideals $I'$ and $I''$ such that
+
+		\[\begin{cases}
+			\overline{I'} \cdot \Isom_K(\phi) = \Isom_K(\psi'), \\
+			\overline{I''} \cdot \Isom_K(\psi') = \Isom_K(\psi).
+		\end{cases}\]
+
+		As the map $\cdot$ is a group action, this implies that $I'' I'$ sends
+		$\Isom_K(\phi)$ to $\Isom_K(\psi')$, and we are done with this
+		sub-case.
+
+	\end{nfproof}
+
+	\begin{nfproof}[($\dim V = 2$)]
+
+		In this case, then \[V = \Ker(u) \cap \phi[r] = \phi[r],\] which
+		implies (\ref{lemma-ore-ker-div}) that $\phi_r$ right-divides $u$:
+		there exists $u'\in\Ktau$ such that \[u = u'\phi_r.\]
+
+	\end{nfproof}
+
+\end{nfproof}
+
+\end{document}

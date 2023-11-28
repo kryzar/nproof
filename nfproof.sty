@@ -1,20 +1,21 @@
 % nfproof.sty
 % https://github.com/kryzar/nfproof
+% 
+% This program is free software: you can redistribute it and/or modify
+% it under the terms of the GNU General Public License as published by
+% the Free Software Foundation, either version 3 of the License, or any
+% later version.
 %
-% This program is free software: you can redistribute it and/or modify it under
-% the terms of the GNU General Public License as published by the Free Software
-% Foundation, either version 3 of the License, or any later version.
+% This program is distributed in the hope that it will be useful, but
+% WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+% General Public License for more details.
 %
-% This program is distributed in the hope that it will be useful, but WITHOUT
-% ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-% FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
-% details.
-%
-% You should have received a copy of the GNU General Public License along with
-% this program.  If not, see <https://www.gnu.org/licenses/>.
+% You should have received a copy of the GNU General Public License
+% along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-\ProvidesFile{nfproof.sty}
-\ProvidesPackage{nfproof}
+\NeedsTeXFormat{LaTeX2e}[1994/06/01]
+\ProvidesPackage{nfproof}[2021/11/23 nfproof]
 
 \RequirePackage{amsthm}
 
@@ -24,68 +25,67 @@
 \newif\ifbkcount
 \newcount\bk@lcnt
 
-%%%%%%%%%%%%%%%%%%%
-% User parameters %
-%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% USER PARAMETERS                    %
+% Set in this section, nowhere else. %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% User parameters are set in this section, and nowhere else.
-
+% TODO: What is this parameter for?
+% TODO: Move it.
 \def\bkvz@before@breakbox{\ifhmode\par\fi\vskip\breakboxskip\relax}
-% Ce que l'on met à gauche du texte, par exemple, une ligne verticale
-% pour faire un cadre, ou une ligne qui ondule.
+% What is left of the text, e.g. a vertical line, a squiggly line:
 \def\bkvz@left{\vrule \@width\fboxrule\hskip\fboxsep}
-% De même, ce que l'on met à droite,
+% Same, but on the right:
 \def\bkvz@right{}
-% en haut,
+% Same, but on top:
 \def\bkvz@top{\hrule height 0cm depth \fboxrule width 1cm \relax}
-% ou en bas.
+% Same, but down:
 \def\bkvz@bottom{\hrule height 0cm depth \fboxrule width 1cm \relax}
-% Si vous modifiez l'une de ces macros, il ne faut pas oublier de
-% modifier aussi la suivante, qui change la valeur de \linewidth en
-% lui retirant la largeur de tout ce que l'on vient de mettre sur le
-% côté. 
+% If you modify one of these macros, you must modify this next one,
+% which modifies the value of \linewidth by subtracting from it what we
+% just added on the side:
+% TODO: Surely this can be moved
 \def\bkvz@set@linewidth{%
   \advance\linewidth -\fboxrule
   \advance\linewidth -\fboxsep
 }
-% Paramètres de Deloro :
+% TODO: What are those parameters for?
 \setlength\fboxsep{.2cm}
 \def\breakboxparindent{1.8em}
 \def\breakboxskip{\topsep}
 
-% End of the user parameters.
+%%%%%%%%%%%%%%%
+% ACTUAL CODE %
+%%%%%%%%%%%%%%%
 
-%%%%%%%%%%%%%%%
-% Actual code %
-%%%%%%%%%%%%%%%
+%%% First part %%%
 
 \def\breakbox{%
-    % On n'est pas nécessairement en mode vertical.
-    % C'est \bkvz@before@breakbox qui s'en occupe (ou non).
+  % We are not necessarily in vertical mode, \bkvz@before@breakbox takes
+  % care of that (or not):
   \bkvz@before@breakbox
-    % on met tout dans une \vbox (\bk@bxb)
+  % Put everything in a \vbox (\bk@bxb):
   \setbox\bk@bxb\vbox\bgroup
-    % À l'intérieur de cette \vbox, on change la valeur de \hsize (et
-    % aussi \linewidth).
+  % Inside this \vbox, change the value of \hsize and \linewidth:
   \bkvz@set@linewidth
   \hsize\linewidth
-    % je ne sais pas ce que fait la commande \@parboxrestore.
+  % I don't know what the command \@parboxrestore does or is for:
   \@parboxrestore
-    % On indente éventuellement, si l'utilisateur le désire. 
+  % Add indentation if user wishes so:
   \parindent\breakboxparindent\relax
 }
 
-%% On coupe la boite
-%%%%%%%%%%%%%%%%%%%%%%
-% \@tempdimb: amount of vertical skip 
-% between the first line (\bk@bxa) and the rest (\bk@bxb)
+%%% Cut the box %%%
+
+% \@tempdimb: amount of vertical skip between the first line (\bk@bxa)
+% and the rest (\bk@bxb).
 \def\bk@split{%
-    % On calcule la hauteur totale (hauteur + profondeur) de la boite.
+  % Calculate total height (height + depth) of the box:
   \@tempdimb\ht\bk@bxb % height of original box
   \advance\@tempdimb\dp\bk@bxb 
-    % On coupe, à l'aide de la commande \vsplit... to 0pt
-    % Le morceau du haut se retrouve dans \bk@bxa, 
-    % celui du bas dans \bk@bxb.
+  % On coupe, à l'aide de la commande \vsplit... to 0pt
+  % Le morceau du haut se retrouve dans \bk@bxa, 
+  % celui du bas dans \bk@bxb.
   \setbox\bk@bxa\vsplit\bk@bxb to\z@ % split it
     % L'un des problèmes, c'est que la première boite a une hauteur vide. 
     % On peut lui redonner sa hauteur initiale grace à \vbox{\unvbox...}
