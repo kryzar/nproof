@@ -1,4 +1,4 @@
-# LaTeX package `nfproof`
+# LaTeX package `nproof`
 
 ## Authors
 
