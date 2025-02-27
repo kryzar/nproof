@@ -2,12 +2,12 @@
 
 ## Authors
 
-Mainly people worked on this package:
+Many people worked on this package:
 - The original version is the package `eclbox.sty`, written by
   Hideki Isozaki in 1992.
 - Vincent Zoonekynd enhanced the package between 1998 and 1999; he distributed
   it under the GPL license.
-- The package circulated through the ages. The current version was used by
+- The current version was used by
   [Adrien Deloro](https://webusers.imj-prg.fr/~adrien.deloro/) in his lecture
   notes.
 - For the initial commit, the creator of this repository only added minor
